@@ -39,7 +39,13 @@ export class ImageService {
             input.image_input = images;
         }
 
-        return this.replicate.repgennanobanano(input);
+        const result = this.replicate.repgennanobanano(input);
+
+        return {
+            success: true,
+            data: result,
+        }
+
     }
 
     async gengemini(data: NanobananoDto, images?: string[]) {
@@ -54,6 +60,11 @@ export class ImageService {
             input.image_input = images;
         }
 
-        return this.replicate.repgengemini(input);
+        const result = this.replicate.repgengemini(input);
+
+        return {
+            success: true,
+            data: result,
+        }
     }
 }
