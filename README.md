@@ -10,20 +10,6 @@ google/veo-3.1
 
 https://replicate.com/google/veo-3.1
 
-
-
-google/veo-3
-
-https://replicate.com/google/veo-3
-
-
-
-google/veo-3-fast
-
-https://replicate.com/google/veo-3-fast
-
-
-
 Генерация фото только с моделями Google
 Добавить возможность выбора кол-ва генераций фото
 Добавить возможность добавлять несколько изображений (в зависимости от модели)

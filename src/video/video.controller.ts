@@ -41,6 +41,16 @@ export class VideoController {
 
   @Post('veo-3-fast')
   @HttpCode(200)
-  async generateVeo3Fast(@Body() data: VideoBaseDto) {}
+  @UseInterceptors(FileInterceptor('file'))
+  async generateVeo3Fast(@Body() data: VideoBaseDto, @UploadedFile() file?: Express.Multer.File) {
+    let imageUrl: string | undefined;
+
+    if (file) {
+      const photo = await this.fileService.upload(file);
+      imageUrl = photo.url;
+    }
+
+    return this.videoService.genVeo3Fast(data, imageUrl);
+  }
 
 }

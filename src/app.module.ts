@@ -5,6 +5,7 @@ import { ResultModule } from './result/result.module';
 import { PromptModule } from './prompt/prompt.module';
 import { AudioModule } from './audio/audio.module';
 import { VideoModule } from './video/video.module';
+import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { VideoModule } from './video/video.module';
       ResultModule,
       PromptModule,
       AudioModule,
-      VideoModule
+      VideoModule,
+      ImageModule
   ],
   controllers: [],
   providers: [],

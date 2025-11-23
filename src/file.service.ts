@@ -97,4 +97,13 @@ export class FileService {
             throw new InternalServerErrorException('Save failed');
         }
     }
+
+    async uploadMultiple(files: Express.Multer.File[]): Promise<UploadResult[]> {
+        if (!files || files.length === 0) {
+            throw new BadRequestException('No files provided');
+        }
+
+        const uploadPromises = files.map(file => this.upload(file));
+        return Promise.all(uploadPromises);
+    }
 }

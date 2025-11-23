@@ -41,6 +41,34 @@ export class ReplicateService {
         }
     }
 
+    async genVideoForVeo3Fast(data: VideoBaseDto, url?: string) {
+        const { prompt, generate_audio, duration, resolution, aspect_ratio } = data;
+
+        try {
+            const input: any = {
+                prompt: prompt,
+                duration: duration,
+                aspect_ratio: aspect_ratio,
+                resolution: resolution,
+                generate_audio: generate_audio,
+            };
+
+            if (url) {
+                input.image = url;
+            }
+
+            const prediction = await this.replicate.predictions.create({
+                version: "google/veo-3-fast",
+                input: input,
+                wait: false
+            });
+
+            return prediction.id;
+        } catch (error) {
+            throw new BadRequestException(`Veo-3 API error: ${error.message}`);
+        }
+    }
+
     async prompt(prompt: string) {
         try {
             const prediction = await this.replicate.predictions.create({
@@ -126,6 +154,78 @@ export class ReplicateService {
             return prediction;
         } catch (error) {
             throw new BadRequestException(`Replicate API error: ${error.message}`);
+        }
+    }
+
+    async replicateimagen4ultra(prompt: string, aspect_ratio: string | undefined, output_format: string | undefined) {
+        try {
+            const prediction = await this.replicate.predictions.create({
+                version: "google/imagen-4-ultra",
+                input: {
+                    prompt: prompt,
+                    aspect_ratio: aspect_ratio || '1:1',
+                    output_format: output_format || 'jpg',
+                },
+                wait: false
+            });
+
+            return {
+                id: prediction.id
+            };
+        } catch (error) {
+            throw new BadRequestException(`Gemini Flash API error: ${error.message}`);
+        }
+    }
+
+    async replicateimagen4fast(prompt: string, aspect_ratio: string | undefined, output_format: string | undefined) {
+        try {
+            const prediction = await this.replicate.predictions.create({
+                version: "google/imagen-4-fast",
+                input: {
+                    prompt: prompt,
+                    aspect_ratio: aspect_ratio || '1:1',
+                    output_format: output_format || 'jpg',
+                },
+                wait: false
+            });
+
+            return {
+                id: prediction.id
+            };
+        } catch (error) {
+            throw new BadRequestException(`Gemini Flash API error: ${error.message}`);
+        }
+    }
+
+    async repgennanobanano(input: any) {
+        try {
+            const prediction = await this.replicate.predictions.create({
+                version: "google/nano-banana",
+                input: input,
+                wait: false
+            });
+
+            return {
+                id: prediction.id
+            }
+        } catch (error) {
+            throw new BadRequestException(`Nano Banana API error: ${error.message}`);
+        }
+    }
+
+    async repgengemini(input: any) {
+        try {
+            const prediction = await this.replicate.predictions.create({
+                version: "google/gemini-2.5-flash-image",
+                input: input,
+                wait: false
+            });
+
+            return {
+                id: prediction.id
+            }
+        } catch (error) {
+            throw new BadRequestException(`Gemini Generate Image API error: ${error.message}`);
         }
     }
 }

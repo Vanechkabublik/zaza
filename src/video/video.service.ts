@@ -16,4 +16,14 @@ export class VideoService {
             }
         }
     }
+
+    async genVeo3Fast(data: VideoBaseDto, url?: string) {
+        const result = await this.replicate.genVideoForVeo3Fast(data, url);
+        return {
+            success: true,
+            data: {
+                result
+            }
+        }
+    }
 }
