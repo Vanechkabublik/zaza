@@ -39,7 +39,7 @@ export class ImageService {
             input.image_input = images;
         }
 
-        const result = this.replicate.repgennanobanano(input);
+        const result = await this.replicate.repgennanobanano(input);
 
         return {
             success: true,
@@ -60,7 +60,7 @@ export class ImageService {
             input.image_input = images;
         }
 
-        const result = this.replicate.repgengemini(input);
+        const result = await this.replicate.repgengemini(input);
 
         return {
             success: true,
