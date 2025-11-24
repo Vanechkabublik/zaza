@@ -3,6 +3,7 @@ import { AudioService } from './audio.service';
 import {PromptDto} from "../prompt/dto/prompt.dto";
 import {SpeechDto} from "./dto/speech.dto";
 import {GenDto} from "./dto/gen.dto";
+import {ApiOperation, ApiResponse} from "@nestjs/swagger";
 
 @Controller('audio')
 export class AudioController {
@@ -22,6 +23,28 @@ export class AudioController {
 
   @Get('models')
   @HttpCode(200)
+  @ApiOperation({
+    summary: 'Получить список доступных голосов для озвучки текста',
+    description: 'Возвращает список всех доступных голосов для генерации озвучки с их идентификаторами и характеристиками'
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Успешный запрос, возвращает список моделей',
+    schema: {
+      example: [
+        {
+          "id": "af_alloy",
+          "name": "Alloy",
+          "gender": "female"
+        },
+        {
+          "id": "af_aoede",
+          "name": "Aoede",
+          "gender": "female"
+        }
+      ]
+    }
+  })
   async getModels() {
     return [
       {

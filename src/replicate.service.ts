@@ -157,9 +157,14 @@ export class ReplicateService {
         }
     }
 
-    async upscale(imageUrl: string, prompt?: string, upscale_factor?: string, compression_quality?: string) {
+    async upscale(
+        imageUrl: string,
+        upscale_factor?: string,
+        compression_quality?: string,
+        prompt?: string
+    ) {
         try {
-            const factor = upscale_factor === 'x4' ? 'x4' : 'x2';
+            const factor = upscale_factor || 'x2';
             const quality = compression_quality ? parseInt(compression_quality) : 80;
 
             const prediction = await this.replicate.predictions.create({
@@ -173,7 +178,9 @@ export class ReplicateService {
             });
 
             return {
-                id: prediction.id
+                factor,
+                quality,
+                imageUrl
             };
         } catch (error) {
             throw new BadRequestException(`Replicate API error: ${error.message}`);
