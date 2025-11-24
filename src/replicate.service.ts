@@ -13,6 +13,38 @@ export class ReplicateService {
         });
     }
 
+    async genVideoForVeo31(input: any) {
+        try {
+            const prediction = await this.replicate.predictions.create({
+                version: "google/veo-3.1",
+                input: input,
+                wait: false
+            });
+
+            return {
+                id: prediction.id
+            }
+        } catch (error) {
+            throw new BadRequestException(`Veo 3.1 API error: ${error.message}`);
+        }
+    }
+
+    async genVideoForVeo31Fast(input: any) {
+        try {
+            const prediction = await this.replicate.predictions.create({
+                version: "google/veo-3.1-fast",
+                input: input,
+                wait: false
+            });
+
+            return {
+                id: prediction.id
+            }
+        } catch (error) {
+            throw new BadRequestException(`Veo 3.1 Fast API error: ${error.message}`);
+        }
+    }
+
     async genVideoForVeo3(data: VideoBaseDto, url?: string) {
         const { prompt, generate_audio, duration, resolution, aspect_ratio } = data;
 
@@ -65,7 +97,7 @@ export class ReplicateService {
 
             return prediction.id;
         } catch (error) {
-            throw new BadRequestException(`Veo-3 API error: ${error.message}`);
+            throw new BadRequestException(`Veo-3 Fast API error: ${error.message}`);
         }
     }
 
