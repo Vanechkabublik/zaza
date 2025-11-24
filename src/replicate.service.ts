@@ -178,9 +178,7 @@ export class ReplicateService {
             });
 
             return {
-                factor,
-                quality,
-                imageUrl
+                id: prediction.id
             };
         } catch (error) {
             throw new BadRequestException(`Replicate API error: ${error.message}`);
