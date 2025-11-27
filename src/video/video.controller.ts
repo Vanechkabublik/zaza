@@ -12,6 +12,7 @@ import { VideoService } from './video.service';
 import {VideoBaseDto} from "./dto/videobase.dto";
 import {FileFieldsInterceptor, FileInterceptor, FilesInterceptor} from "@nestjs/platform-express";
 import {FileService} from "../file.service";
+import {SoraDto} from "./dto/Sora.dto";
 
 @Controller('video')
 export class VideoController {
@@ -58,15 +59,6 @@ export class VideoController {
     return this.videoService.genveo31(data);
   }
 
-  @Post('veo-3')
-  @HttpCode(200)
-  async generateVeo3() {
-    return {
-      success: false,
-      message: 'This is Veo-3 server not work!'
-    }
-  }
-
   @Post('veo-3-fast')
   @HttpCode(200)
   @UseInterceptors(FileInterceptor('file'))
@@ -79,6 +71,29 @@ export class VideoController {
     }
 
     return this.videoService.genVeo3Fast(data, imageUrl);
+  }
+
+  @Post('veo-3')
+  @HttpCode(200)
+  async generateVeo3() {
+    return {
+      success: false,
+      message: 'This is Veo-3 server not work!'
+    }
+  }
+
+  @Post('sora-2-pro')
+  @UseInterceptors(FileInterceptor('file'))
+  @HttpCode(200)
+  async sora2pro(@Body() data: SoraDto, @UploadedFile() file?: Express.Multer.File) {
+    let imageUrl: string | undefined;
+
+    if (file) {
+      const photo = await this.fileService.upload(file);
+      imageUrl = photo.url;
+    }
+
+    return this.videoService.genvideosora2(data, imageUrl);
   }
 
 }

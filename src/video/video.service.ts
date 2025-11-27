@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {ReplicateService} from "../replicate.service";
 import {VideoBaseDto} from "./dto/videobase.dto";
+import {SoraDto} from "./dto/Sora.dto";
 
 @Injectable()
 export class VideoService {
@@ -67,6 +68,26 @@ export class VideoService {
         }
 
         const result = await this.replicate.genVideoForVeo31Fast(input);
+
+        return {
+            success: true,
+            data: result,
+        }
+    }
+
+    async genvideosora2(data: SoraDto, url?: string) {
+        const input: any = {
+            prompt: data.prompt,
+            seconds: data.seconds,
+            aspect_ratio: data.aspect_ratio,
+            resolution: data.resolution
+        }
+
+        if(url) {
+            input.input_reference = url;
+        }
+
+        const result = await this.replicate.gensora2pro(input);
 
         return {
             success: true,

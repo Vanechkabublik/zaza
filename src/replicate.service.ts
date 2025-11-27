@@ -265,4 +265,20 @@ export class ReplicateService {
             throw new BadRequestException(`Gemini Generate Image API error: ${error.message}`);
         }
     }
+
+    async gensora2pro(input: any) {
+        try {
+            const prediction = await this.replicate.predictions.create({
+                version: "openai/sora-2-pro",
+                input: input,
+                wait: false
+            });
+
+            return {
+                id: prediction.id
+            }
+        } catch (error) {
+            throw new BadRequestException(`Sora-2-pro API error: ${error.message}`);
+        }
+    }
 }
