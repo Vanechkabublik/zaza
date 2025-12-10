@@ -20,7 +20,6 @@ export class VideoBaseDto {
     @IsOptional()
     resolution?: string = '1080p';
 
-    @IsBoolean()
     @IsOptional()
     generate_audio?: boolean = true;
 }
